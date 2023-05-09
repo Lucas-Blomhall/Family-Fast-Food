@@ -12,6 +12,7 @@ import AllRecipesList from "./scenes/AllRecipesList";
 import CreateARecipe from "./scenes/CreateARecipe";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import RecipeDetail from "./scenes/RecipeDetail";
+import ApiTestScene from "./scenes/ApiTestScene";
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
     </Router>
     <CreateARecipe setSelectedPage={setSelectedPage} />
     <Recipes setSelectedPage={setSelectedPage} />
+    <ApiTestScene setSelectedPage={setSelectedPage} />
     <SelectedRecipe setSelectedPage={setSelectedPage} />
     <ContactMe setSelectedPage={setSelectedPage} />
     <Footer/>

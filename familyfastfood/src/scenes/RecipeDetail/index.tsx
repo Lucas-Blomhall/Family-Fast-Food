@@ -1,10 +1,10 @@
 import ActionButton from '@/shared/ActionButton';
-import { IRecipe, RouteParams } from '@/shared/AllInterfaces';
+//import { IRecipes, RouteParams } from '@/shared/AllInterfaces';
 import HText from '@/shared/HText';
 import { SelectedPage } from '@/shared/types';
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import meatballsandspaghetti from "@/assets/meatballsandspaghetti.jpg"; 
 import { Checkbox, FormControlLabel } from '@mui/material';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
@@ -14,25 +14,35 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { red } from '@mui/material/colors';
 
 
-
 type Props = {
     setSelectedPage: (value: SelectedPage) => void;
   };
-
   
 const RecipeDetail = ({ setSelectedPage }: Props) => {
-  const { recipeID } = useParams(); //
-  const [recipe, setRecipe] = useState<IRecipe | null>(null);
 
-  useEffect(() => {
-    fetch(`https://localhost:7256/api/Recipes/${recipeID}`) // replace with your API endpoint
-      .then(response => response.json())
-      .then(data => setRecipe(data));
-  }, [recipeID]);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  if (!recipe) {
-    return <div>Loading...</div>;
-  }
+  const food = searchParams.get('food');
+  const dog = searchParams.get('dog');
+
+  //Jag behöver inte ta in recept id från en fetch igen. För att det är id:n jag vill ha från listan. Men jag gjorde en demo som har exempel till frontend.
+  
+  
+  //const { RecipesID } = useParams(); Ta bort markeringen sen när du är klar!!!
+
+
+  //const [recipe, setRecipe] = useState<IRecipes | null>(null);
+
+  // useEffect(() => {
+  //   fetch(`http://localhost:5239/api/Recipes/${1}`) // replace with your API endpoint
+  //     .then(response => response.json())
+  //     .then(data => setRecipe(data));
+  //     console.log(1);
+  // }, [1]);
+
+  // if (!recipe) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <div>
@@ -59,7 +69,7 @@ const RecipeDetail = ({ setSelectedPage }: Props) => {
                   }}
                 >
                   <HText>
-                    {recipe.RecipeTitle}
+                    Recipe Title
                   </HText>
                 </motion.div>
               </div>
@@ -77,7 +87,7 @@ const RecipeDetail = ({ setSelectedPage }: Props) => {
               }}
             >
               <p className="my-5 ">
-                {recipe.Description}
+                Recipe Description
               </p>
               <p className="mb-5 ">
                 Fringilla a sed at suspendisse ut enim volutpat. Rhoncus vel est

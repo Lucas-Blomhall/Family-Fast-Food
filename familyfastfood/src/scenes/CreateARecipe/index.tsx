@@ -1,5 +1,5 @@
 import ActionButton from '@/shared/ActionButton';
-import { IData, IRecipe, RouteParams, TRecipe } from '@/shared/AllInterfaces';
+import { IData, IRecipes, RouteParams, TRecipes } from '@/shared/AllInterfaces';
 import HText from '@/shared/HText';
 import { SelectedPage } from '@/shared/types';
 import { motion } from 'framer-motion';
@@ -22,13 +22,13 @@ type Props = {
   
 const CreateARecipe = ({ setSelectedPage}: Props) => {
   const { recipeID } = useParams(); 
-  const [recipe, setRecipe] = useState<IRecipe | null>(null);
-  const [input, setInput] = useState<IRecipe>({ RecipeID: 0, RecipeTitle: '', Description: "", PrepTime: "", TotalTime: "", ServingSize: 0, Category: "", Cuisine: "", Tags: "", ImageURL: ""});
+  const [recipe, setRecipe] = useState<IRecipes | null>(null);
+  const [input, setInput] = useState<IRecipes>({ RecipeID: 0, RecipesTitle: '', Description: "", PrepTime: "", TotalTime: "", ServingSize: 0, Category: "", Cuisine: "", Tags: "", ImageURL: ""});
 
   const [UrecipeID, setRecipeID] = useState('');
 
 
-  const [RecipeTitle, setRecipeTitle] = useState(input.RecipeTitle);
+  const [RecipesTitle, setRecipesTitle] = useState(input.RecipesTitle);
   const [Description, setDescription] = useState(input.Description);
 
   const [PrepTime, setPrepTime] = useState(input.PrepTime);
@@ -50,10 +50,10 @@ const CreateARecipe = ({ setSelectedPage}: Props) => {
     setRecipeTitleError(false);
     setRecipeTitleError(false);
     
-    if (RecipeTitle && Description){
-        console.log(RecipeTitle, Description);
-        const data: TRecipe = {
-            RecipeTitle,
+    if (RecipesTitle && Description){
+        console.log(RecipesTitle, Description);
+        const data: TRecipes = {
+            RecipesTitle,
             Description,
             PrepTime,
             TotalTime,
@@ -64,13 +64,13 @@ const CreateARecipe = ({ setSelectedPage}: Props) => {
             ImageURL,
           };
         try {
-            const response = await axios.post('https://localhost:7256/api/Recipes', data);
+            const response = await axios.post('http://localhost:5239/api/Recipes', data);
             console.log(response.data);
           } catch (error) {
             console.error('Error:', error);
           }
     }
-    if (RecipeTitle == ''){
+    if (RecipesTitle == ''){
         setRecipeTitleError(true);
     }
     if (Description == ''){
@@ -80,7 +80,7 @@ const CreateARecipe = ({ setSelectedPage}: Props) => {
 
 
   useEffect(() => {
-    fetch(`https://localhost:7256/api/Recipes/${recipeID}`) // replace with your API endpoint
+    fetch(`http://localhost:5239/api/Recipes/${recipeID}`) // replace with your API endpoint
       .then(response => response.json())
       .then(data => setRecipe(data));
   }, [recipeID]);
@@ -107,7 +107,7 @@ const CreateARecipe = ({ setSelectedPage}: Props) => {
         color='secondary'
         fullWidth
         required
-        onChange={(e) => setRecipeTitle(e.target.value)}
+        onChange={(e) => setRecipesTitle(e.target.value)}
         error={recipeTitleError}
       />
       </p>

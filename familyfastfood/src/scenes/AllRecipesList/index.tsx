@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { SelectedPage } from '@/shared/types';
 import { useNavigate } from "react-router-dom";
-import { IRecipe } from '@/shared/AllInterfaces';
-
-
+import { IRecipes } from '@/shared/AllInterfaces';
 
 type Props = {
     setSelectedPage: (value: SelectedPage) => void;
@@ -18,16 +16,13 @@ const AllRecipesList = ({ setSelectedPage }: Props) => {
         navigate(`api/Recipes/${id}`);
       };
 
-  const [recipes, setRecipes] = useState<IRecipe[]>([]);
+  const [recipes, setRecipes] = useState<IRecipes[]>([]);
 
   useEffect(() => {
-    fetch('https://localhost:7256/api/Recipes') // replace with your API endpoint
+    fetch('http://localhost:5239/api/Recipes') // replace with your API endpoint
       .then(response => response.json())
       .then(data => setRecipes(data));
   }, []);
-
-  
-
 
   return (
     <section id="allrecipeslist" className="mx-auto min-h-full w-5/6 py-20">
@@ -49,7 +44,7 @@ const AllRecipesList = ({ setSelectedPage }: Props) => {
               style={{cursor: "pointer"}}
             >
               <TableCell component="th" scope="recipe">{recipe.RecipeID}</TableCell>
-              <TableCell align="right">{recipe.RecipeTitle}</TableCell>
+              <TableCell align="right">{recipe.RecipesTitle}</TableCell>
               <TableCell align="right">{recipe.Description}</TableCell>
             </TableRow>
           ))}
