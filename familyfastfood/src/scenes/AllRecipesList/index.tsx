@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { SelectedPage } from '@/shared/types';
 import { useNavigate } from "react-router-dom";
-import { IRecipes } from '@/shared/AllInterfaces';
+import { IRecipes } from '@/TypesFolder/ApiTypes';
 
 type Props = {
     setSelectedPage: (value: SelectedPage) => void;
@@ -38,14 +38,14 @@ const AllRecipesList = ({ setSelectedPage }: Props) => {
         <TableBody>
           {recipes.map((recipe) => (
             <TableRow
-              key={recipe.RecipeID}
+              key={recipe.recipesID}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              onClick={() => handleRowClick(recipe.RecipeID)}
+              onClick={() => handleRowClick(recipe.recipesID)}
               style={{cursor: "pointer"}}
             >
-              <TableCell component="th" scope="recipe">{recipe.RecipeID}</TableCell>
-              <TableCell align="right">{recipe.RecipesTitle}</TableCell>
-              <TableCell align="right">{recipe.Description}</TableCell>
+              <TableCell component="th" scope="recipe">{recipe.recipesID}</TableCell>
+              <TableCell align="right">{recipe.recipesTitle}</TableCell>
+              <TableCell align="right">{recipe.description}</TableCell>
             </TableRow>
           ))}
         </TableBody>

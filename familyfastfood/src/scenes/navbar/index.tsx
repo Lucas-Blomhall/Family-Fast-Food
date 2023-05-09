@@ -64,7 +64,12 @@ const Navbar = ({isTopOfPage, selectedPage, setSelectedPage}: Props) => {
                     page="ApiTestScene"
                     selectedPage={selectedPage}
                     setSelectedPage={setSelectedPage}
-                  />apitestscene
+                  />
+                  <Link
+                    page="ApiTestDetailRecipe"
+                    selectedPage={selectedPage}
+                    setSelectedPage={setSelectedPage}
+                  />
                 </div>
                 <div className={`${flexBetween} gap-8`}>
                   <p>Log in</p>
@@ -117,6 +122,11 @@ const Navbar = ({isTopOfPage, selectedPage, setSelectedPage}: Props) => {
             />
             <Link
               page="ApiTestScene"
+              selectedPage={selectedPage}
+              setSelectedPage={setSelectedPage}
+            />
+            <Link
+              page="ApiTestDetailRecipe"
               selectedPage={selectedPage}
               setSelectedPage={setSelectedPage}
             />

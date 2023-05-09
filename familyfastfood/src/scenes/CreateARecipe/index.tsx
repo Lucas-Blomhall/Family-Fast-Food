@@ -1,5 +1,5 @@
 import ActionButton from '@/shared/ActionButton';
-import { IData, IRecipes, RouteParams, TRecipes } from '@/shared/AllInterfaces';
+import { RouteParams } from '@/shared/AllInterfaces';
 import HText from '@/shared/HText';
 import { SelectedPage } from '@/shared/types';
 import { motion } from 'framer-motion';
@@ -13,6 +13,7 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { red } from '@mui/material/colors';
 import axios from 'axios';
+import { IRecipes } from '@/TypesFolder/ApiTypes';
 
 
 type Props = {
@@ -23,21 +24,24 @@ type Props = {
 const CreateARecipe = ({ setSelectedPage}: Props) => {
   const { recipeID } = useParams(); 
   const [recipe, setRecipe] = useState<IRecipes | null>(null);
-  const [input, setInput] = useState<IRecipes>({ RecipeID: 0, RecipesTitle: '', Description: "", PrepTime: "", TotalTime: "", ServingSize: 0, Category: "", Cuisine: "", Tags: "", ImageURL: ""});
+  
+  const [input, setInput] = useState<IRecipes>({ recipesID: 0, recipesTitle: '', description: "", prepTime: "", totalTime: "", servingSize: 0, imageURL: "", categoriesId: 0, cuisinesId: 0, tagsId: 0, ingredientsID1: 0, ingredientsID2: 0, ingredientsID3: 0, ingredientsID4: 0, ingredientsID5: 0});
 
-  const [UrecipeID, setRecipeID] = useState('');
-
-
-  const [RecipesTitle, setRecipesTitle] = useState(input.RecipesTitle);
-  const [Description, setDescription] = useState(input.Description);
-
-  const [PrepTime, setPrepTime] = useState(input.PrepTime);
-  const [TotalTime, setTotalTime] = useState(input.TotalTime);
-  const [ServingSize, setServingSize] = useState(input.ServingSize);
-  const [Category, setCategory] = useState(input.Category);
-  const [Cuisine, setCuisine] = useState(input.Cuisine);
-  const [Tags, setTags] = useState(input.Tags);
-  const [ImageURL, setImageURL] = useState(input.ImageURL);
+  const [recipesID, setRecipeID] = useState(input.recipesID);
+  const [recipesTitle, setRecipesTitle] = useState(input.recipesTitle);
+  const [description, setDescription] = useState(input.description);
+  const [prepTime, setPrepTime] = useState(input.prepTime);
+  const [totalTime, setTotalTime] = useState(input.totalTime);
+  const [servingSize, setServingSize] = useState(input.servingSize);
+  const [categoriesId, setCategoriesID] = useState(input.categoriesId);
+  const [cuisinesId, setCuisineID] = useState(input.cuisinesId);
+  const [tagsId, setTagsID] = useState(input.tagsId);
+  const [imageURL, setImageURL] = useState(input.imageURL);
+  const [ingredientsID1, setIngredientsID1] = useState(input.ingredientsID1);
+  const [ingredientsID2, setIngredientsID2] = useState(input.ingredientsID2);
+  const [ingredientsID3, setIngredientsID3] = useState(input.ingredientsID3);
+  const [ingredientsID4, setIngredientsID4] = useState(input.ingredientsID4);
+  const [ingredientsID5, setIngredientsID5] = useState(input.ingredientsID5);
  
   const [recipeTitleError, setRecipeTitleError] = useState(false);
   const [descriptionError, setDescriptionError] = useState(false);
@@ -50,18 +54,24 @@ const CreateARecipe = ({ setSelectedPage}: Props) => {
     setRecipeTitleError(false);
     setRecipeTitleError(false);
     
-    if (RecipesTitle && Description){
-        console.log(RecipesTitle, Description);
-        const data: TRecipes = {
-            RecipesTitle,
-            Description,
-            PrepTime,
-            TotalTime,
-            ServingSize,
-            Category,
-            Cuisine,
-            Tags,
-            ImageURL,
+    if (recipesTitle && description){
+        console.log(recipesTitle, description);
+        const data: IRecipes = {
+          recipesID,
+          recipesTitle,
+          description,
+          prepTime,
+          totalTime,
+          servingSize,
+          imageURL,
+            categoriesId,
+            cuisinesId,
+            tagsId,
+            ingredientsID1,
+            ingredientsID2,
+            ingredientsID3,
+            ingredientsID4,
+            ingredientsID5,
           };
         try {
             const response = await axios.post('http://localhost:5239/api/Recipes', data);
@@ -70,10 +80,10 @@ const CreateARecipe = ({ setSelectedPage}: Props) => {
             console.error('Error:', error);
           }
     }
-    if (RecipesTitle == ''){
+    if (recipesTitle == ''){
         setRecipeTitleError(true);
     }
-    if (Description == ''){
+    if (description == ''){
         setDescriptionError(true);
     }
   };

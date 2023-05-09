@@ -13,6 +13,7 @@ import CreateARecipe from "./scenes/CreateARecipe";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import RecipeDetail from "./scenes/RecipeDetail";
 import ApiTestScene from "./scenes/ApiTestScene";
+import ApiTestDetailRecipe from "./scenes/ApiTestDetailRecipe";
 
 
 function App() {
@@ -45,7 +46,13 @@ function App() {
     </Router>
     <CreateARecipe setSelectedPage={setSelectedPage} />
     <Recipes setSelectedPage={setSelectedPage} />
-    <ApiTestScene setSelectedPage={setSelectedPage} />
+    <Router>
+        <Routes>
+        <Route path="/" element={<ApiTestScene setSelectedPage={setSelectedPage} list={[]}/>}  />
+        <Route path="/api/Recipes/:recipeID" element={<ApiTestDetailRecipe/>}  />
+        <Route path="/api/ApiTestDetail/:id" element={<ApiTestDetailRecipe/>}  /> // Define a route for ApiTestDetailRecipe with id parameter
+        </Routes>
+        </Router>
     <SelectedRecipe setSelectedPage={setSelectedPage} />
     <ContactMe setSelectedPage={setSelectedPage} />
     <Footer/>
