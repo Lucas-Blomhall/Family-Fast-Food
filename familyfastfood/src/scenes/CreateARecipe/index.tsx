@@ -53,6 +53,14 @@ const CreateARecipe = ({ setSelectedPage}: Props) => {
     e.preventDefault();
     setRecipeTitleError(false);
     setRecipeTitleError(false);
+
+    
+  useEffect(() => {
+    fetch(`http://localhost:5239/api/Recipes/${recipeID}`) // replace with your API endpoint
+      .then(response => response.json())
+      .then(data => setRecipe(data));
+  }, [recipeID]);
+
     
     if (recipesTitle && description){
         console.log(recipesTitle, description);
@@ -88,12 +96,6 @@ const CreateARecipe = ({ setSelectedPage}: Props) => {
     }
   };
 
-
-  useEffect(() => {
-    fetch(`http://localhost:5239/api/Recipes/${recipeID}`) // replace with your API endpoint
-      .then(response => response.json())
-      .then(data => setRecipe(data));
-  }, [recipeID]);
 
   if (!recipe) {
     return <div>Loading...</div>;

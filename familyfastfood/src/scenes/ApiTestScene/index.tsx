@@ -1,4 +1,3 @@
-
 import { IRecipes, RecipesItem } from '@/TypesFolder/ApiTypes';
 import { SelectedPage } from '@/shared/types';
 import React, { useEffect, useState } from 'react';

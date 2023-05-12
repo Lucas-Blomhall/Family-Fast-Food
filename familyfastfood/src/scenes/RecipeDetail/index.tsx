@@ -16,30 +16,29 @@ import { red } from '@mui/material/colors';
 
 type Props = {
     setSelectedPage: (value: SelectedPage) => void;
+    selectedID: number | null;
   };
   
-const RecipeDetail = ({ setSelectedPage }: Props) => {
+const RecipeDetail = ({ setSelectedPage, selectedID }: Props) => {
 
-  const [searchParams, setSearchParams] = useSearchParams();
 
-  const food = searchParams.get('food');
-  const dog = searchParams.get('dog');
+  useEffect(() => {
+    if (selectedID !== null) {
+      // Fetch the details for the recipe with selectedID
+    }
+  }, [selectedID]);
 
+
+  //Gammal kod under:
   //Jag behöver inte ta in recept id från en fetch igen. För att det är id:n jag vill ha från listan. Men jag gjorde en demo som har exempel till frontend.
-  
-  
   //const { RecipesID } = useParams(); Ta bort markeringen sen när du är klar!!!
-
-
   //const [recipe, setRecipe] = useState<IRecipes | null>(null);
-
   // useEffect(() => {
   //   fetch(`http://localhost:5239/api/Recipes/${1}`) // replace with your API endpoint
   //     .then(response => response.json())
   //     .then(data => setRecipe(data));
   //     console.log(1);
   // }, [1]);
-
   // if (!recipe) {
   //   return <div>Loading...</div>;
   // }

@@ -14,10 +14,12 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import RecipeDetail from "./scenes/RecipeDetail";
 import ApiTestScene from "./scenes/ApiTestScene";
 import ApiTestDetailRecipe from "./scenes/ApiTestDetailRecipe";
+import RecipeForm from "./scenes/RecipesForm";
 
 
 function App() {
   const [selectedPage, setSelectedPage] = useState<SelectedPage>(SelectedPage.Home);
+  const [selectedID, setSelectedID] = useState<number | null>(null);
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
 
   useEffect(() => {
@@ -34,23 +36,22 @@ function App() {
 
   return <div className="app bg-gray-20">
     
-    <Navbar 
-      isTopOfPage={isTopOfPage}
-    selectedPage={selectedPage} setSelectedPage={setSelectedPage}/>
+    <Navbar isTopOfPage={isTopOfPage} selectedPage={selectedPage} setSelectedPage={setSelectedPage}/>
     <Home setSelectedPage={setSelectedPage} />
     <Router>
       <Routes>
-        <Route path="/" element={<AllRecipesList setSelectedPage={setSelectedPage}/>}  />
-        <Route path="/api/Recipes/:recipeID" element={<RecipeDetail setSelectedPage={setSelectedPage} />}  />
+        <Route path="/" element={<AllRecipesList setSelectedPage={setSelectedPage} setSelectedID={setSelectedID} />}  />
+        <Route path="/recipes/:id" element={<RecipeDetail setSelectedPage={setSelectedPage} selectedID={selectedID}/>}  />
       </Routes>
     </Router>
+    <RecipeForm/>
     <CreateARecipe setSelectedPage={setSelectedPage} />
     <Recipes setSelectedPage={setSelectedPage} />
     <Router>
         <Routes>
         <Route path="/" element={<ApiTestScene setSelectedPage={setSelectedPage} list={[]}/>}  />
         <Route path="/api/Recipes/:recipeID" element={<ApiTestDetailRecipe/>}  />
-        <Route path="/api/ApiTestDetail/:id" element={<ApiTestDetailRecipe/>}  /> // Define a route for ApiTestDetailRecipe with id parameter
+        <Route path="/api/ApiTestDetail/:id" element={<ApiTestDetailRecipe/>}  />
         </Routes>
         </Router>
     <SelectedRecipe setSelectedPage={setSelectedPage} />
