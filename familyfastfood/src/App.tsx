@@ -10,7 +10,7 @@ import ContactMe from "./scenes/contactme";
 import Footer from "./scenes/footer";
 import AllRecipesList from "./scenes/AllRecipesList";
 import CreateARecipe from "./scenes/CreateARecipe";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import RecipeDetail from "./scenes/RecipeDetail";
 import ApiTestScene from "./scenes/ApiTestScene";
 import ApiTestDetailRecipe from "./scenes/ApiTestDetailRecipe";
@@ -34,30 +34,26 @@ function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return <div className="app bg-gray-20">
-    
-    <Navbar isTopOfPage={isTopOfPage} selectedPage={selectedPage} setSelectedPage={setSelectedPage}/>
-    <Home setSelectedPage={setSelectedPage} />
+  return (
+  <div className="app bg-gray-20">
     <Router>
+      <Navbar isTopOfPage={isTopOfPage} selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
+      <Home setSelectedPage={setSelectedPage} />
       <Routes>
-        <Route path="/" element={<AllRecipesList setSelectedPage={setSelectedPage} setSelectedID={setSelectedID} />}  />
-        <Route path="/recipes/:id" element={<RecipeDetail setSelectedPage={setSelectedPage} selectedID={selectedID}/>}  />
+        <Route path="/" element={<AllRecipesList setSelectedPage={setSelectedPage} setSelectedID={setSelectedID} />} />
+        <Route path="/recipes/:id" element={<RecipeDetail setSelectedPage={setSelectedPage} selectedID={selectedID} />} />
+        <Route path="/api/Recipes/:recipeID" element={<ApiTestDetailRecipe />} />
+        <Route path="/api/ApiTestDetail/:id" element={<ApiTestDetailRecipe />} />
       </Routes>
-    </Router>
     <RecipeForm/>
     <CreateARecipe setSelectedPage={setSelectedPage} />
     <Recipes setSelectedPage={setSelectedPage} />
-    <Router>
-        <Routes>
-        <Route path="/" element={<ApiTestScene setSelectedPage={setSelectedPage} list={[]}/>}  />
-        <Route path="/api/Recipes/:recipeID" element={<ApiTestDetailRecipe/>}  />
-        <Route path="/api/ApiTestDetail/:id" element={<ApiTestDetailRecipe/>}  />
-        </Routes>
-        </Router>
     <SelectedRecipe setSelectedPage={setSelectedPage} />
     <ContactMe setSelectedPage={setSelectedPage} />
     <Footer/>
-  </div>;
+    </Router>
+  </div>
+  );
 }
 
 export default App;

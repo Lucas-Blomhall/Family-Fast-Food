@@ -1,10 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
 import { SelectedPage } from '@/shared/types';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { IRecipes } from '@/TypesFolder/ApiTypes';
 import { Ingredient, Tags } from '@/shared/AllRecipesTypes';
+
 
 type Props = {
     setSelectedPage: (value: SelectedPage) => void;
@@ -35,6 +36,9 @@ type Cuisines = {
 };
 
 const AllRecipesList = ({ setSelectedPage, setSelectedID }: Props) => {
+
+  //Use navigate
+  const navigate = useNavigate(); // Get the navigate function from the hook
 
   //Alla Api useStates
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
@@ -121,11 +125,10 @@ const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
 
 
   //Gamla koden
-    const navigate = useNavigate();
-
     const handleRowClick = async (id: number) => {
       console.log(id);
       setSelectedID(id);
+      navigate(`/recipes/${id}`);
     };
     
 
@@ -154,9 +157,9 @@ const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
               <TableCell align="right">{recipe.recipesTitle}</TableCell>
               <TableCell align="right">{recipe.description}</TableCell>
               <TableCell align="right">
-  {
-    category.find(cat => cat.categoriesId === recipe.categoriesId)?.categoriesName ?? "Not available"
-  }
+              {
+                category.find(cat => cat.categoriesId === recipe.categoriesId)?.categoriesName ?? "Not available"
+              }
 </TableCell>
 <TableCell align="right">
   {
