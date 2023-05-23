@@ -155,7 +155,7 @@ function RecipeForm() {
             </TableRow>
           ))}
             </div>
-        {/* Other form fields... */}
+            <br/>
     </form>
   );
 }

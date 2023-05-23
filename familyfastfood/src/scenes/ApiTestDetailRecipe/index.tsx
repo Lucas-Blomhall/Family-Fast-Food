@@ -31,4 +31,3 @@ const ApiTestDetailRecipe = () => {
   };
   
   export default ApiTestDetailRecipe;
-  

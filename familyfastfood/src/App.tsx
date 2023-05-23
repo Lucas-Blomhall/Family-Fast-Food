@@ -15,6 +15,8 @@ import RecipeDetail from "./scenes/RecipeDetail";
 import ApiTestScene from "./scenes/ApiTestScene";
 import ApiTestDetailRecipe from "./scenes/ApiTestDetailRecipe";
 import RecipeForm from "./scenes/RecipesForm";
+import CreateRecipePage from "./scenes/CreateRecipePage";
+import CreateIngredientPage from "./scenes/CreateIngredientPage";
 
 
 function App() {
@@ -46,6 +48,8 @@ function App() {
         <Route path="/api/ApiTestDetail/:id" element={<ApiTestDetailRecipe />} />
       </Routes>
     <RecipeForm/>
+    <CreateRecipePage/>
+    <CreateIngredientPage/>
     <CreateARecipe setSelectedPage={setSelectedPage} />
     <Recipes setSelectedPage={setSelectedPage} />
     <SelectedRecipe setSelectedPage={setSelectedPage} />

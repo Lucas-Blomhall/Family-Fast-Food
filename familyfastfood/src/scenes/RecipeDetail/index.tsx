@@ -1,5 +1,4 @@
 import ActionButton from '@/shared/ActionButton';
-//import { IRecipes, RouteParams } from '@/shared/AllInterfaces';
 import HText from '@/shared/HText';
 import { SelectedPage } from '@/shared/types';
 import { motion } from 'framer-motion';
@@ -12,7 +11,7 @@ import Favorite from '@mui/icons-material/Favorite';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { red } from '@mui/material/colors';
-import { Ingredient, Tags } from '@/shared/AllRecipesTypes';
+import { Tags } from '@/shared/AllRecipesTypes';
 
 
 type Props = {
@@ -20,8 +19,8 @@ type Props = {
     selectedID: number | null;
   };
 
-type Categories = {
-  find(arg0: (cat: any) => boolean): unknown;
+type Categories = { 
+  //find(arg0: (cat: any) => boolean): unknown;
   categoriesId: number;
   categoriesName: string;
 };
@@ -31,23 +30,66 @@ cuisinesId: number;
 cuisinesName: string;
 };
 
+type IngredientNFV = {
+  ingredientID: number;
+  protein: number;
+  calories: number;
+  sugars: number;
+};
+
+
+type Ingredients = {
+  ingredientsID: number;
+  ingredientsName: string;
+  nutritionFacts: NutritionFacts;
+  };
+
 type Recipe = {
   recipesID: number;
   recipesTitle: string;
   description: string;
-  ingredients: Ingredient[];
-  category: Categories;   // Notice this change
-  cuisine: Cuisines;     // Notice this change
+  prepTime: string;
+  totalTime: string;
+  servingSize: number;
+  ingredientsID1: number;
+  ingredientsID2: number;
+  ingredientsID3: number;
+  ingredientsID4: number;
+  ingredientsID5: number;
   categoriesId: number;
   cuisinesId: number;
-  tags: Tags[];
+  //New NFV nutrition facts value
+  ingredients: IngredientNFV[];
 };
 
-  
+//Här börjar Nutrition Facts
+type NutritionFacts = {
+  protein: number;
+  calories: number;
+  sugars: number;
+};
+
 const RecipeDetail = ({ setSelectedPage, selectedID }: Props) => {
   const [selectedRecipeID, setSelectedRecipeID] = useState<Recipe | null>(null);
   const [category, setCategory] = useState<Categories[]>([]);
   const [cuisine, setCuisine] = useState<Cuisines[]>([]);
+  const [ingredient, setIngredient] = useState<Ingredients[]>([]);
+  
+
+  const [ingredientNFV1, setIngredientNFV1] = useState<Ingredients[]>([]);
+  const [ingredientNFV2, setIngredientNFV2] = useState<Ingredients[]>([]);
+  const [ingredientNFV3, setIngredientNFV3] = useState<Ingredients[]>([]);
+  const [ingredientNFV4, setIngredientNFV4] = useState<Ingredients[]>([]);
+  const [ingredientNFV5, setIngredientNFV5] = useState<Ingredients[]>([]);
+
+  //NutritionFact
+  const [nutritionFacts, setNutritionFacts] = useState<NutritionFacts>({
+    protein: 0,
+    calories: 0,
+    sugars: 0,
+  });
+  
+
 
   useEffect(() => {
     const handleFetch = async () => {
@@ -61,7 +103,8 @@ const RecipeDetail = ({ setSelectedPage, selectedID }: Props) => {
         }
         const data = await response.json();
         setSelectedRecipeID(data);  // Save data to state
-      } catch (error) {
+      }
+      catch (error) {
         console.error('Something went wrong when fetching the data: ', error);
       }
     }
@@ -81,6 +124,41 @@ useEffect(() => {
     .then((response) => response.json())
     .then((data) => setCuisine(data));
 }, []);
+
+//Ingredients
+useEffect(() => {
+  fetch("http://localhost:5239/api/Ingredients")
+    .then((response) => response.json())
+    .then((data) => setIngredient(data));
+}, []);
+
+
+//Fetching each ingredient to get their nutrition facts:
+useEffect(() => {
+  if (selectedRecipeID){
+    const ingredientIds = [selectedRecipeID.ingredientsID1, selectedRecipeID.ingredientsID2, selectedRecipeID.ingredientsID3, selectedRecipeID.ingredientsID4, selectedRecipeID.ingredientsID5].filter(id => id > 0);
+
+    Promise.all(ingredientIds.map(id => fetch(`http://localhost:5239/api/Ingredients/${id}`).then(res => res.json())))
+      .then(data => {
+        // data is an array of responses
+        const totalNutrition = data.reduce((total, ingredient) => {
+          return {
+            protein: total.protein + ingredient.protein,
+            calories: total.calories + ingredient.calories,
+            sugars: total.sugars + ingredient.sugars,
+          };
+        }, { protein: 0, calories: 0, sugars: 0 });
+  
+        setNutritionFacts(totalNutrition);
+      })
+      .catch(error => console.error(error));
+  }
+}, [selectedRecipeID]);
+
+
+
+
+
 
 
   return (
@@ -128,15 +206,26 @@ useEffect(() => {
               }}
             >
               <p className="my-5 ">
-                Description
+                Description: {selectedRecipeID && selectedRecipeID.description}
               </p>
               <p className="mb-5 ">
-              {selectedRecipeID && selectedRecipeID.description}
-              </p>
-              <p className="mb-5 ">
-                {
+              Category: {
                   category.find(cat => cat.categoriesId === selectedRecipeID?.categoriesId)?.categoriesName ?? "Not available"
                 }
+              </p>
+              <p className="mb-5 ">
+              Cuisine: {
+                  cuisine.find(cui => cui.cuisinesId === selectedRecipeID?.cuisinesId)?.cuisinesName ?? "Not available"
+                }
+              </p>
+              <p className="my-5 ">
+              prepTime: {selectedRecipeID && selectedRecipeID.prepTime}
+              </p>
+              <p className="my-5 ">
+              totalTime: {selectedRecipeID && selectedRecipeID.totalTime}
+              </p>
+              <p className="my-5 ">
+              servingSize: {selectedRecipeID && selectedRecipeID.servingSize}
               </p>
             </motion.div>
 
@@ -149,7 +238,8 @@ useEffect(() => {
               </div>
             </div>
           </div>
-        </div><div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-8">
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-8">
 
             <div className="bg-white rounded shadow-md max-w-xl mt-4 p-4">
               {/* To styling: mx-auto */}
@@ -162,42 +252,42 @@ useEffect(() => {
                     <td className="py-2 font-medium border-r border-black">
                       <div>
                         <button><p>Plus +</p></button>
-                        <HText>4 Port</HText>
+                        <HText>ServingSize: {selectedRecipeID && selectedRecipeID.servingSize}</HText>
                         <button><p>Minus -</p></button>
                       </div>
                     </td>
                     <td className="py-2 border-l border-black">The measurements:</td>
                   </tr>
                   <tr>
-                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Spaghetti" /></td>
+                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label={`${ingredient.find(ing => ing.ingredientsID === selectedRecipeID?.ingredientsID1)?.ingredientsName ?? "Not available"}`} /></td>
                     <td className="py-2">300 g</td>
                   </tr>
                   <tr>
-                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Smoked pork" /></td>
+                  <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label={`${ingredient.find(ing => ing.ingredientsID === selectedRecipeID?.ingredientsID2)?.ingredientsName ?? "Not available"}`} /></td>
+                  <td className="py-2">150 g</td>
+                  </tr>
+                  <tr>
+                  <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label={`${ingredient.find(ing => ing.ingredientsID === selectedRecipeID?.ingredientsID3)?.ingredientsName ?? "Not available"}`} /></td>
                     <td className="py-2">150 g</td>
                   </tr>
                   <tr>
-                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Butter" /></td>
-                    <td className="py-2">150 g</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Whipped cream" /></td>
+                  <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label={`${ingredient.find(ing => ing.ingredientsID === selectedRecipeID?.ingredientsID4)?.ingredientsName ?? "Not available"}`} /></td>
                     <td className="py-2">½ dl</td>
                   </tr>
                   <tr>
-                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Salt" /></td>
+                  <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label={`${ingredient.find(ing => ing.ingredientsID === selectedRecipeID?.ingredientsID5)?.ingredientsName ?? "Not available"}`} /></td>
                     <td className="py-2">½ tsk</td>
                   </tr>
                   <tr>
-                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Finely chopped clove of garlic" /></td>
+                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Examples1: Finely chopped clove of garlic" /></td>
                     <td className="py-2">1 st</td>
                   </tr>
                   <tr>
-                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Freshly ground black pepper" /></td>
+                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Examples2: Freshly ground black pepper" /></td>
                     <td className="py-2">2 krm</td>
                   </tr>
                   <tr>
-                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Egg yolks" /></td>
+                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Examples3: Egg yolks" /></td>
                     <td className="py-2">4 st</td>
                   </tr>
                 </tbody>
@@ -236,9 +326,16 @@ useEffect(() => {
                         <td className="py-2 font-medium border-r border-black">Nutritional values, per port</td>
                         <td className="py-2 border-l border-black">1 Portion</td>
                       </tr>
+                      {nutritionFacts && (
+                          <div>
+                            <p>Protein: {nutritionFacts.protein}g</p>
+                            <p>Calories: {nutritionFacts.calories}kcal</p>
+                            <p>Sugar: {nutritionFacts.sugars}g</p>
+                          </div>
+                        )}
                       <tr>
-                        <td className="py-2 pl-6 font-medium">Protein</td>
-                        <td className="py-2">28 g</td>
+                        <td className="py-2 pl-6 font-medium">Protein </td>
+                        <td className="py-2">{nutritionFacts && nutritionFacts.protein}g </td>
                       </tr>
                       <tr>
                         <td className="py-2 pl-6 font-medium">Total Carbohydrates</td>
