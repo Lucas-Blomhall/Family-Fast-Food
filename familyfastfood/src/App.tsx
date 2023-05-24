@@ -47,15 +47,13 @@ function App() {
         <Route path="/api/Recipes/:recipeID" element={<ApiTestDetailRecipe />} />
         <Route path="/api/ApiTestDetail/:id" element={<ApiTestDetailRecipe />} />
       </Routes>
-    <RecipeForm/>
-    <CreateRecipePage/>
-    <CreateIngredientPage/>
-    <CreateARecipe setSelectedPage={setSelectedPage} />
-    <Recipes setSelectedPage={setSelectedPage} />
-    <SelectedRecipe setSelectedPage={setSelectedPage} />
-    <ContactMe setSelectedPage={setSelectedPage} />
-    <Footer/>
-    </Router>
+      <CreateRecipePage setSelectedPage={setSelectedPage}/>
+      <CreateIngredientPage setSelectedPage={setSelectedPage}/>
+      <Recipes setSelectedPage={setSelectedPage} />
+      <SelectedRecipe setSelectedPage={setSelectedPage} />
+      {/*<ContactMe setSelectedPage={setSelectedPage} /> */}
+      <Footer setSelectedPage={setSelectedPage}/>
+      </Router>
   </div>
   );
 }

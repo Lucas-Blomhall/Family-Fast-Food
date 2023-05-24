@@ -1,6 +1,9 @@
 
 export enum SelectedPage {
     Home = "home",
+    Footer = "footer",
+    CreateRecipePage = "createrecipepage",
+    CreateIngredientPage = "createingredientpage",
     Recipes = "recipes",
     SelectedRecipe = " selectedrecipe",
     ContactMe = "contactme",

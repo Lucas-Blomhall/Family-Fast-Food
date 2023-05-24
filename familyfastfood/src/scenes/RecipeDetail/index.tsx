@@ -51,15 +51,21 @@ type Recipe = {
   prepTime: string;
   totalTime: string;
   servingSize: number;
+  stepbystep1: string;
+  stepbystep2: string;
+  stepbystep3: string;
+  stepbystep4: string;
+  stepbystep5: string;
+  stepbystep6: string;
+  categoriesId: number;
+  cuisinesId: number;
+  tagsId: number;
   ingredientsID1: number;
   ingredientsID2: number;
   ingredientsID3: number;
   ingredientsID4: number;
   ingredientsID5: number;
-  categoriesId: number;
-  cuisinesId: number;
-  //New NFV nutrition facts value
-  ingredients: IngredientNFV[];
+  
 };
 
 //Här börjar Nutrition Facts
@@ -76,11 +82,6 @@ const RecipeDetail = ({ setSelectedPage, selectedID }: Props) => {
   const [ingredient, setIngredient] = useState<Ingredients[]>([]);
   
 
-  const [ingredientNFV1, setIngredientNFV1] = useState<Ingredients[]>([]);
-  const [ingredientNFV2, setIngredientNFV2] = useState<Ingredients[]>([]);
-  const [ingredientNFV3, setIngredientNFV3] = useState<Ingredients[]>([]);
-  const [ingredientNFV4, setIngredientNFV4] = useState<Ingredients[]>([]);
-  const [ingredientNFV5, setIngredientNFV5] = useState<Ingredients[]>([]);
 
   //NutritionFact
   const [nutritionFacts, setNutritionFacts] = useState<NutritionFacts>({
@@ -224,9 +225,6 @@ useEffect(() => {
               <p className="my-5 ">
               totalTime: {selectedRecipeID && selectedRecipeID.totalTime}
               </p>
-              <p className="my-5 ">
-              servingSize: {selectedRecipeID && selectedRecipeID.servingSize}
-              </p>
             </motion.div>
 
             {/* BUTTON */}
@@ -259,35 +257,35 @@ useEffect(() => {
                     <td className="py-2 border-l border-black">The measurements:</td>
                   </tr>
                   <tr>
-                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label={`${ingredient.find(ing => ing.ingredientsID === selectedRecipeID?.ingredientsID1)?.ingredientsName ?? "Not available"}`} /></td>
+                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox />} label={`${ingredient.find(ing => ing.ingredientsID === selectedRecipeID?.ingredientsID1)?.ingredientsName ?? "Not available"}`} /></td>
                     <td className="py-2">300 g</td>
                   </tr>
                   <tr>
-                  <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label={`${ingredient.find(ing => ing.ingredientsID === selectedRecipeID?.ingredientsID2)?.ingredientsName ?? "Not available"}`} /></td>
+                  <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox />} label={`${ingredient.find(ing => ing.ingredientsID === selectedRecipeID?.ingredientsID2)?.ingredientsName ?? "Not available"}`} /></td>
                   <td className="py-2">150 g</td>
                   </tr>
                   <tr>
-                  <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label={`${ingredient.find(ing => ing.ingredientsID === selectedRecipeID?.ingredientsID3)?.ingredientsName ?? "Not available"}`} /></td>
+                  <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox />} label={`${ingredient.find(ing => ing.ingredientsID === selectedRecipeID?.ingredientsID3)?.ingredientsName ?? "Not available"}`} /></td>
                     <td className="py-2">150 g</td>
                   </tr>
                   <tr>
-                  <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label={`${ingredient.find(ing => ing.ingredientsID === selectedRecipeID?.ingredientsID4)?.ingredientsName ?? "Not available"}`} /></td>
+                  <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox />} label={`${ingredient.find(ing => ing.ingredientsID === selectedRecipeID?.ingredientsID4)?.ingredientsName ?? "Not available"}`} /></td>
                     <td className="py-2">½ dl</td>
                   </tr>
                   <tr>
-                  <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label={`${ingredient.find(ing => ing.ingredientsID === selectedRecipeID?.ingredientsID5)?.ingredientsName ?? "Not available"}`} /></td>
+                  <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox />} label={`${ingredient.find(ing => ing.ingredientsID === selectedRecipeID?.ingredientsID5)?.ingredientsName ?? "Not available"}`} /></td>
                     <td className="py-2">½ tsk</td>
                   </tr>
                   <tr>
-                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Examples1: Finely chopped clove of garlic" /></td>
+                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox />} label="Examples1: Finely chopped clove of garlic" /></td>
                     <td className="py-2">1 st</td>
                   </tr>
                   <tr>
-                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Examples2: Freshly ground black pepper" /></td>
+                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox />} label="Examples2: Freshly ground black pepper" /></td>
                     <td className="py-2">2 krm</td>
                   </tr>
                   <tr>
-                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Examples3: Egg yolks" /></td>
+                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox />} label="Examples3: Egg yolks" /></td>
                     <td className="py-2">4 st</td>
                   </tr>
                 </tbody>
@@ -300,16 +298,22 @@ useEffect(() => {
               <table className="table w-full border border-black border-collapse">
                 <tbody>
                   <tr>
-                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Boil the spaghetti" /></td>
+                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox />} label={`Stepbystep1: ${selectedRecipeID && selectedRecipeID?.stepbystep1} `} /></td>
                   </tr>
                   <tr>
-                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Cut the pork into small cubes. Fry the pork crispy in butter in a frying pan" /></td>
+                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox />} label={`Stepbystep2: ${selectedRecipeID && selectedRecipeID?.stepbystep2} `} /></td>
                   </tr>
                   <tr>
-                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Whisk together cream, salt, garlic and half of the cheese." /></td>
+                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox />} label={`Stepbystep3: ${selectedRecipeID && selectedRecipeID?.stepbystep3} `} /></td>
                   </tr>
                   <tr>
-                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox defaultChecked />} label="Stir the pork and cheese mixture into the cooked spaghetti and stir vigorously to a creamy consistency. Sprinkle over the rest of the cheese and pepper. Serve pasta carbonara with an egg yolk." /></td>
+                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox />} label={`Stepbystep4: ${selectedRecipeID && selectedRecipeID?.stepbystep4} `} /></td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox />} label={`Stepbystep5: ${selectedRecipeID && selectedRecipeID?.stepbystep5} `} /></td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pl-6 font-medium"><FormControlLabel control={<Checkbox />} label={`Stepbystep6: ${selectedRecipeID && selectedRecipeID?.stepbystep6} `} /></td>
                   </tr>
                 </tbody>
               </table>

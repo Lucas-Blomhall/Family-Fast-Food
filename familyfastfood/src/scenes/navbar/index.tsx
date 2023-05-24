@@ -41,32 +41,17 @@ const Navbar = ({isTopOfPage, selectedPage, setSelectedPage}: Props) => {
                     setSelectedPage={setSelectedPage}
                   />
                   <Link
-                    page="Recipes"
+                    page="CreateRecipePage"
                     selectedPage={selectedPage}
                     setSelectedPage={setSelectedPage}
                   />
                   <Link
-                    page="Selected Recipe"
+                    page="CreateIngredientPage"
                     selectedPage={selectedPage}
                     setSelectedPage={setSelectedPage}
                   />
                   <Link
-                    page="Contact Me"
-                    selectedPage={selectedPage}
-                    setSelectedPage={setSelectedPage}
-                  />
-                  <Link
-                    page="AllRecipesList"
-                    selectedPage={selectedPage}
-                    setSelectedPage={setSelectedPage}
-                  />
-                  <Link
-                    page="ApiTestScene"
-                    selectedPage={selectedPage}
-                    setSelectedPage={setSelectedPage}
-                  />
-                  <Link
-                    page="ApiTestDetailRecipe"
+                    page="Footer"
                     selectedPage={selectedPage}
                     setSelectedPage={setSelectedPage}
                   />
@@ -106,27 +91,12 @@ const Navbar = ({isTopOfPage, selectedPage, setSelectedPage}: Props) => {
               setSelectedPage={setSelectedPage}
             />
             <Link
-              page="Recipes"
-              selectedPage={selectedPage}
-              setSelectedPage={setSelectedPage}
-            />
+                    page="CreateRecipePage"
+                    selectedPage={selectedPage}
+                    setSelectedPage={setSelectedPage}
+                  />
             <Link
-              page="Selected Recipe"
-              selectedPage={selectedPage}
-              setSelectedPage={setSelectedPage}
-            />
-            <Link
-              page="Contact Me"
-              selectedPage={selectedPage}
-              setSelectedPage={setSelectedPage}
-            />
-            <Link
-              page="ApiTestScene"
-              selectedPage={selectedPage}
-              setSelectedPage={setSelectedPage}
-            />
-            <Link
-              page="ApiTestDetailRecipe"
+              page="Footer"
               selectedPage={selectedPage}
               setSelectedPage={setSelectedPage}
             />

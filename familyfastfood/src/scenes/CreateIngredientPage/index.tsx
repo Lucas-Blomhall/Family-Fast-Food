@@ -1,5 +1,7 @@
 import HText from '@/shared/HText';
+import { SelectedPage } from '@/shared/types';
 import { Checkbox, FormControlLabel, TableCell } from '@mui/material';
+import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
 
@@ -23,8 +25,11 @@ export type Ingredient3 = {
     iron: number;
   };
 
+  type Props = {
+    setSelectedPage: (value: SelectedPage) => void;
+  };
 
-const CreateIngredientPage = () => {
+const CreateIngredientPage = ({ setSelectedPage }: Props) => {
   const [ingredientsID, setIngredientsID] = useState("");
   const [ingredientsName, setIngredientsName] = useState("");
 
@@ -84,13 +89,16 @@ const CreateIngredientPage = () => {
   });
 };
 
-
   return (
     <div>
+      <section id="createingredientpage" className="mx-auto w-5/6 pt-24 pb-32">
+      <motion.div
+        onViewportEnter={() => setSelectedPage(SelectedPage.CreateIngredientPage)}
+      >
+      <br/>
       <div className="text-2xl font-bold"><HText>
       Create a new Ingredient
               </HText></div>
-
       <br/>
 
     <form onSubmit={handleSubmit}>
@@ -335,6 +343,9 @@ const CreateIngredientPage = () => {
           </form>
 
           <br/>
+          <hr/>
+          </motion.div>
+          </section>
         </div>
   );
 };

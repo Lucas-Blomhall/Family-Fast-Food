@@ -1,5 +1,7 @@
 import HText from '@/shared/HText';
+import { SelectedPage } from '@/shared/types';
 import { Checkbox, FormControlLabel, TableCell } from '@mui/material';
+import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
 
@@ -90,7 +92,11 @@ export type Recipe2 = {
   tags: Tags2[];
 };
 
-const CreateRecipePage = () => {
+type Props = {
+  setSelectedPage: (value: SelectedPage) => void;
+};
+
+const CreateRecipePage = ({ setSelectedPage }: Props) => {
 
   const [ingredients, setIngredients] = useState<Ingredient2[]>([]);
   const [categories, setCategories] = useState<Categories2[]>([]);
@@ -208,6 +214,10 @@ const CreateRecipePage = () => {
 
   return (
     <div>
+      <section id="createrecipepage" className="mx-auto w-5/6 pt-24 pb-32">
+      <motion.div
+        onViewportEnter={() => setSelectedPage(SelectedPage.CreateRecipePage)}
+      >
       <div className="text-2xl font-bold"><HText>
       Create a new recipe
               </HText></div>
@@ -300,7 +310,7 @@ const CreateRecipePage = () => {
 
         <TableCell align="right"><label>
           Cuisine:
-            <select value={categoriesId} onChange={e => setCategoriesID(e.target.value?  parseInt(e.target.value) : 0)}>
+            <select value={cuisinesId} onChange={e => setCuisineID(e.target.value?  parseInt(e.target.value) : 0)}>
                 <option value="">Select a Category</option>
                 {cuisines.map((cuisine) => (
                     <option key={cuisine.cuisinesId} value={cuisine.cuisinesId}>
@@ -498,6 +508,9 @@ const CreateRecipePage = () => {
           </form>
 
           <br/>
+          <hr/>
+          </motion.div>
+          </section>
         </div>
   );
 };
