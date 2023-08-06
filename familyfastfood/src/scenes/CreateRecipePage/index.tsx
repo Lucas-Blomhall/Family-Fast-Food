@@ -202,11 +202,11 @@ const CreateRecipePage = ({ setSelectedPage }: Props) => {
   .then(response => response.json())
   .then(data => {
     console.log('Success:', data);
-    // Handle success - maybe clear the form or redirect the user
+    // Om det lyckas kommer man hit
   })
   .catch((error) => {
     console.error('Error:', error);
-    // Handle error - maybe display a message to the user
+    // Om det blir error så visas felmeddelandet
   });
 };
 
@@ -307,7 +307,6 @@ const CreateRecipePage = ({ setSelectedPage }: Props) => {
             </select>
         </label></TableCell>
 
-
         <TableCell align="right"><label>
           Cuisine:
             <select value={cuisinesId} onChange={e => setCuisineID(e.target.value?  parseInt(e.target.value) : 0)}>
@@ -341,18 +340,17 @@ const CreateRecipePage = ({ setSelectedPage }: Props) => {
       <div className="text-2xl font-bold"><HText>
                 Ingredients
               </HText></div>
-      <table className="table w-full border border-black border-collapse">
+      <table>
                 <tbody>
-                  <tr className="border-b border-black">
-                    <td className="py-2 font-medium border-r border-black">
+                  <tr>
+                    <td>
                       <div>
                         <HText><label>
         Serving Size:
-          <input type="text" value={servingSize} onChange={e => setServingSize(e.target.valueAsNumber)} required />
+          <input className="w-20" type="text" value={servingSize} onChange={e => setServingSize(e.target.valueAsNumber)} required />
         </label></HText>
                       </div>
                     </td>
-                    <td className="py-2 border-l border-black">The measurements:</td>
                   </tr>
                   <tr>
                     <td className="py-2 pl-6 font-medium"><TableCell align="right"><label>
@@ -365,9 +363,8 @@ const CreateRecipePage = ({ setSelectedPage }: Props) => {
                     </option>
                 ))}
             </select>
-        </label></TableCell></td>
-                    <td className="py-2">300 g</td>
-                  </tr>
+        </label></TableCell>
+        </td></tr>
                   <tr>
                   <td className="py-2 pl-6 font-medium"><TableCell align="right"><label>
             Ingredient 2:
@@ -379,9 +376,7 @@ const CreateRecipePage = ({ setSelectedPage }: Props) => {
                     </option>
                 ))}
             </select>
-        </label></TableCell></td>
-                  <td className="py-2">150 g</td>
-                  </tr>
+        </label></TableCell></td></tr>
                   <tr>
                   <td className="py-2 pl-6 font-medium"><TableCell align="right"><label>
             Ingredient 3:
@@ -394,7 +389,6 @@ const CreateRecipePage = ({ setSelectedPage }: Props) => {
                 ))}
             </select>
         </label></TableCell></td>
-                    <td className="py-2">150 g</td>
                   </tr>
                   <tr>
                   <td className="py-2 pl-6 font-medium"><TableCell align="right"><label>
@@ -408,7 +402,6 @@ const CreateRecipePage = ({ setSelectedPage }: Props) => {
                 ))}
             </select>
         </label></TableCell></td>
-                    <td className="py-2">½ dl</td>
                   </tr>
                   <tr>
                   <td className="py-2 pl-6 font-medium"><TableCell align="right"><label>
@@ -422,7 +415,6 @@ const CreateRecipePage = ({ setSelectedPage }: Props) => {
                 ))}
             </select>
         </label></TableCell></td>
-                    <td className="py-2">½ tsk</td>
                   </tr>
                 </tbody>
               </table>
@@ -433,7 +425,7 @@ const CreateRecipePage = ({ setSelectedPage }: Props) => {
               <div className="text-2xl font-bold"><HText>
                 Here are the steps
               </HText></div>
-              <table className="table w-full border border-black border-collapse">
+              <table className="table w-full border-4 border-lime-300 border-collapse">
                 <tbody>
                   <tr>
                     <td className="py-2 pl-6 font-medium">

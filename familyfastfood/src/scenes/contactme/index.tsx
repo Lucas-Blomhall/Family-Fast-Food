@@ -30,7 +30,6 @@ const ContactMe = ({ setSelectedPage }: Props) => {
       <motion.div
         onViewportEnter={() => setSelectedPage(SelectedPage.ContactMe)}
       >
-        {/* HEADER */}
         <motion.div
           className="md:w-3/5"
           initial="hidden"
@@ -52,7 +51,6 @@ const ContactMe = ({ setSelectedPage }: Props) => {
           </p>
         </motion.div>
 
-        {/* FORM AND IMAGE */}
         <div className="mt-10 justify-between gap-8 md:flex">
           <motion.div
             className="mt-10 basis-3/5 md:mt-0"

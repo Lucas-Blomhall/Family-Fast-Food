@@ -49,7 +49,7 @@ const CreateIngredientPage = ({ setSelectedPage }: Props) => {
   const [iron, setIron] = useState(0);
 
     
-  //Handle Submit
+  //När man submit kommer man hit i koden
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); 
 
@@ -81,11 +81,11 @@ const CreateIngredientPage = ({ setSelectedPage }: Props) => {
   .then(response => response.json())
   .then(data => {
     console.log('Success:', data);
-    // Handle success - maybe clear the form or redirect the user
+    // Om det lyckas kommer man hit
   })
   .catch((error) => {
     console.error('Error:', error);
-    // Handle error - maybe display a message to the user
+    // Om det blir error så visas felmeddelandet
   });
 };
 

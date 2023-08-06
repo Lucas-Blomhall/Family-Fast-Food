@@ -1,7 +1,7 @@
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { SelectedPage } from "@/shared/types";
 import ActionButton from "@/shared/ActionButton";
-import worldglobe from "@/assets/worldglobe.jpg";
+import Jordklot from "@/assets/Jordklot.png";
 import FamilyFastFoodHatTransBackgroundText from "@/assets/FamilyFastFoodHatTransBackgroundText.png";
 
 import AnchorLink from "react-anchor-link-smooth-scroll";
@@ -17,14 +17,11 @@ const Home = ({ setSelectedPage }: Props) => {
 
   return (
     <section id="home" className="gap-16 bg-gray-20 py-10 md:h-full md:pb-0">
-      {/* IMAGE AND MAIN HEADER */}
       <motion.div
         className="mx-auto w-5/6 items-center justify-center md:flex md:h-5/6"
         onViewportEnter={() => setSelectedPage(SelectedPage.Home)}
       >
-        {/* MAIN HEADER */}
         <div className="z-10 mt-32 md:basis-3/5">
-          {/* HEADINGS */}
           <motion.div
             className="md:-mt-20"
             initial="hidden"
@@ -42,12 +39,11 @@ const Home = ({ setSelectedPage }: Props) => {
               </div>
             </div>
 
-            <p className="mt-8 text-sm">
-            Hello, Hola, Olá, Bonjour, Ciao, مرحبا (Marhaba), Bună, 你好 (Nǐ hǎo),  नमस्ते (Namaste), হ্যালো (Hyālō), こんにちは (Konnichiwa) Halo, 안녕하세요 (Annyeonghaseyo),  Merhaba, Xin chào, Hallo, Habari, 👋
+            <p className=" typing-effect mt-8 text-sm">
+            Hello, Hej, Hola, Olá, Bonjour, Ciao, مرحبا (Marhaba), Bună, 你好 (Nǐ hǎo), नमस्ते (Namaste), হ্যালো (Hyālō), <br/> こんにちは (Konnichiwa) Halo, 안녕하세요 (Annyeonghaseyo),  Merhaba, Xin chào, Hallo, Habari, 👋
             </p>
           </motion.div>
 
-          {/* ACTIONS */}
           <motion.div
             className="mt-8 flex items-center gap-8"
             initial="hidden"
@@ -72,16 +68,14 @@ const Home = ({ setSelectedPage }: Props) => {
           </motion.div>
         </div>
 
-        {/* IMAGE */}
         <div
           className="flex basis-3/5 justify-center md:z-10
               md:ml-40 md:mt-16 md:justify-items-end"
         >
-          <img alt="home-pageGraphic" src={worldglobe} />
+          <img alt="home-pageGraphic" src={Jordklot} />
         </div>
       </motion.div>
 
-      {/* SPONSORS */}
       {isAboveMediumScreens && (
         <div className="h-[150px] w-full bg-primary-100 py-10">
           <div className="mx-auto w-5/6">

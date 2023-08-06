@@ -4,6 +4,36 @@
 @tailwind components;
 @tailwind utilities;
 
+.typing-effect {
+    white-space: nowrap;
+    overflow: hidden; 
+    border-right: .15em solid orange; /* This is the cursor */
+    width: auto; 
+    animation: typing 5s steps(30, end), blink-caret .5s step-end infinite;
+  }
+  
+  /* The typing effect */
+  @keyframes typing {
+    0% {
+        width: 0%;
+      }
+      33% {
+        width: 100%;
+      }
+      66% {
+        width: 100%;
+      }
+      100% {
+        width: auto;
+      }
+  }
+  
+  /* The typewriter cursor effect */
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange }
+  }
+
 html,
 body,
 #root,

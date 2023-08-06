@@ -62,8 +62,8 @@ const Recipes = ({ setSelectedPage }: Props) => {
           }}
         >
           <HText>The standards on the recipes</HText>
-          <p className="my-5 text-sm">
-            I give you a website where you can create your own recipe that are categorized and calculated for every need. It has some standards and some of the services my website gives you for your need are: 
+          <p className="typing-effect my-5 text-sm">
+            I give you a website where you can create your own recipe that are categorized and calculated for every need. <br/> It has some standards and some of the services my website gives you for your need are: 
           </p>
         </motion.div>
 
@@ -129,7 +129,7 @@ const Recipes = ({ setSelectedPage }: Props) => {
                 visible: { opacity: 1, x: 0 },
               }}
             >
-              <p className="my-5">
+              <p className=" my-5">
                 Nascetur aenean massa auctor tincidunt. Iaculis potenti amet
                 egestas ultrices consectetur adipiscing ultricies enim. Pulvinar
                 fames vitae vitae quis. Quis amet vulputate tincidunt at in
@@ -141,7 +141,8 @@ const Recipes = ({ setSelectedPage }: Props) => {
                 Fringilla a sed at suspendisse ut enim volutpat. Rhoncus vel est
                 tellus quam porttitor. Mauris velit euismod elementum arcu neque
                 facilisi. Amet semper tortor facilisis metus nibh. Rhoncus sit
-                enim mattis odio in risus nunc.
+                enim mattis odio in risus nunc. 
+                <br/>I am my own customer sometimes /Lucas Blomhäll
               </p>
             </motion.div>
 

@@ -14,7 +14,7 @@ const ApiTestDetailRecipe = () => {
       fetch(`http://localhost:5239/api/Recipes/${id}`)
         .then(response => response.json())
         .then(data => setRecipeDetail(data));
-    }, [id]); // re-fetch when id changes
+    }, [id]); // re-fetchar när id ändras
   
     if (!recipeDetail) {
       return <div>Loading...</div>;
@@ -24,7 +24,6 @@ const ApiTestDetailRecipe = () => {
         <section id="apitestdetailrecipe" className="gap-16 bg-gray-20 py-10 md:h-full md:pb-0">
       <div>
         <h2>{recipeDetail.id}</h2>
-        {/* render other fields as needed */}
       </div>
       </section>
     );

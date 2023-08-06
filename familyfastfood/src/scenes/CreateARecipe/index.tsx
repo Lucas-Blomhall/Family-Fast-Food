@@ -49,6 +49,7 @@ const CreateARecipe = ({ setSelectedPage}: Props) => {
   const [details, setDetails] = useState('');
   const [recipeName, setRecipeName] = useState('');
 
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setRecipeTitleError(false);
@@ -56,7 +57,7 @@ const CreateARecipe = ({ setSelectedPage}: Props) => {
 
     
   useEffect(() => {
-    fetch(`http://localhost:5239/api/Recipes/${recipeID}`) // replace with your API endpoint
+    fetch(`http://localhost:5239/api/Recipes/${recipeID}`)
       .then(response => response.json())
       .then(data => setRecipe(data));
   }, [recipeID]);

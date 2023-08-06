@@ -19,22 +19,25 @@ const Footer = ({ setSelectedPage }: Props) => {
           <img alt="logo" src={lucasselfiefffbackground} 
           width="200"/>
           <p className="my-5">
-            Lorem vitae ut augue auctor faucibus eget eget ut libero. Elementum
-            purus et arcu massa dictum condimentum. Augue scelerisque iaculis
-            orci ut habitant laoreet. Iaculis tristique.
+          Lucas Blomhäll.<br></br>
+          Född 2002.<br></br>
+          KYH Yrkeshögskola.<br></br>
+          Fullstack developer.<br></br>
+          <br></br>
+          Jag tror att dem flesta tycker att jag är en glad och ansvarstagande kille.
           </p>
-          <p>© Family Fast-Food All Rights Reserved. (Not)</p>
+          <p>© Family Fast-Food All Rights Reserved.</p>
         </div>
         <div className="mt-16 basis-1/4 md:mt-0">
           <h4 className="font-bold">Links</h4>
-          <p className="my-5">Massa orci senectus</p>
-          <p className="my-5">Et gravida id et etiam</p>
-          <p>Ullamcorper vivamus</p>
+          <p className="my-5"><a href="https://www.linkedin.com/in/lucas-blomh%C3%A4ll-737314228/" className="no-underline hover:underline">My LinkedIn Profile</a></p>
+          <p className="my-5"><a href="https://github.com/Lucas-Blomhall?tab=repositories" className="no-underline hover:underline">My Github Profile</a></p>
+          <p>Thanks!</p>
         </div>
         <div className="mt-16 basis-1/4 md:mt-0">
-          <h4 className="font-bold">Contact Us</h4>
-          <p className="my-5">Tempus metus mattis risus volutpat egestas.</p>
-          <p>(333)425-6825</p>
+          <h4 className="font-bold">Contact Me</h4>
+          <p className="my-5">lucas@gmail.com</p>
+          <p>(073)444-5555</p>
         </div>
       </div>
       </motion.div>

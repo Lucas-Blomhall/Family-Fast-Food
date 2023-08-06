@@ -6,6 +6,9 @@ import Link from "./Link";
 import { SelectedPage } from "@/shared/types";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import ActionButton from "@/shared/ActionButton";
+import { useMsal } from "@azure/msal-react";
+
+
 
 
 type Props = {
@@ -20,6 +23,16 @@ const Navbar = ({isTopOfPage, selectedPage, setSelectedPage}: Props) => {
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
   const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
   const navbarBackground = isTopOfPage ? "" : "bg-primary-100 drop-shadow";
+  const { instance } = useMsal();
+  const loginRequest = {
+    scopes: ["User.Read"]
+  };
+  
+
+  const login = () => {
+    instance.loginPopup(loginRequest);
+  };
+
 
   return (
     <nav>
@@ -57,7 +70,9 @@ const Navbar = ({isTopOfPage, selectedPage, setSelectedPage}: Props) => {
                   />
                 </div>
                 <div className={`${flexBetween} gap-8`}>
-                  <p>Log in</p>
+                <button onClick={login} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                  Log in
+                </button>
                   <ActionButton setSelectedPage={setSelectedPage}>
                     Create an account
                   </ActionButton>
