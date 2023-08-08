@@ -81,7 +81,7 @@ const LoginButtonFunction = async (id: number) => {
         <td className="py-2 pl-6 font-medium"><label className="flex flex-col space-y-1 w-full sm:w-4/5">
               <span className="text-lg font-medium">UserPassword:</span>
               <input 
-                  type="text" 
+                  type="password"
                   value={userPassword} 
                   onChange={e => setUserPassword(e.target.value)} 
                   required 

@@ -160,6 +160,9 @@ const RecipeDetail = ({ setSelectedPage, selectedID }: Props) => {
   const navigate = useNavigate();
   const [isDataFetched, setIsDataFetched] = useState(false);
 
+  const [events, setEvents] = useState([]);
+
+
   //Card thing:
   const [expanded, setExpanded] = React.useState(false);
 
@@ -225,6 +228,8 @@ const [numericProfileLogins, setNumericProfileLogins] = useState<NumericProfileL
 //   whereToGet: "",
 //   notes: "",
 // });
+
+
 
   useEffect(() => {
     const handleFetch = async () => {
@@ -308,15 +313,51 @@ useEffect(() => {
 //Fetching UserProfiles
 useEffect(() => {
   fetch("http://localhost:5239/api/UserLogins/1")
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
     .then((data) => {
       console.log(data);
       setUserProfile(data)
+    })
+    .catch((error) => {
+      console.log("There was a problem with the fetch operation:", error.message);
     });
 }, []);
 
 
+//Update User values
+const handleUpdateUser = async () => {
+  // Construct the user data you want to send to the server
+  const userToUpdate = {
+    UserLoginsId: 1,
+    UserLoginsName: 'Adam',
+    UserLoginsPassword: 'SecuredPassword5',
+    UserCaloriesGoal: userProfile?.userCaloriesGoal,
+    userCaloriesConsumed: null
+  };
 
+  try {
+    const response = await fetch(`http://localhost:5239/api/UserLogins/1`, {
+      method: 'PUT', 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userToUpdate)
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    console.log("Update successful!");
+  } catch (error) {
+    console.error("An error occurred while updating the user: ", error);
+  }
+}
 
 
 
@@ -374,30 +415,32 @@ const minusfunction = () => {
 //Calories meter eated
 const CaloriesConsumedButton = () => {
   console.log("hi");
-  if(userProfile?.userCaloriesConsumed || userProfile?.userCaloriesConsumed === 0) {
+  if(userProfile) {
 
-    let oldServingSize = userProfile.userCaloriesConsumed;
-    let newServingSize = userProfile.userCaloriesConsumed + numericNutritionFacts.calories;
+    let oldUserCaloriesConsumed = userProfile.userCaloriesConsumed;
+    let newUserCaloriesConsumed = userProfile.userCaloriesConsumed + numericNutritionFacts.calories;
     
-    setUserProfile({...userProfile, userCaloriesConsumed: newServingSize});
-  
+    setUserProfile({...userProfile, userCaloriesConsumed: newUserCaloriesConsumed});
+    
+    console.log("userProfile: " + userProfile?.userCaloriesConsumed);
+
     setNumericProfileLogins(oldValues => {
       const newValues = { ...oldValues };
-
-      const adjustmentFactor = newServingSize;
+      console.log("We are in the code")
+      const adjustmentFactor = newUserCaloriesConsumed;
 
       console.log(numericProfileLogins);
       
       const numericKeys: (keyof NumericProfileLogins)[] = ['userCaloriesConsumed'];
       numericKeys.forEach(key => {
         newValues[key] += adjustmentFactor;
+        console.log(newValues[key]);
       });
+      console.log("We are returning value")
       return newValues;
     });
   }
 };
-
-
 
 
   return (

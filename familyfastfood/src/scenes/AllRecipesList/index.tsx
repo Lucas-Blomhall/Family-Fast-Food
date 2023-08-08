@@ -7,6 +7,9 @@ import { IRecipes } from '@/TypesFolder/ApiTypes';
 import { Ingredient, Tags } from '@/shared/AllRecipesTypes';
 import useMediaQuery from "@/hooks/useMediaQuery";
 import lucasselfiefffbackground from "@/assets/lucasselfiefffbackground.png";
+import { Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import FullCalendar from '@fullcalendar/react';
 
 
 type Props = {
@@ -53,6 +56,7 @@ type ProfileLogins = {
   userLoginsName: string;
   userLoginsPassword: string;
   userCaloriesGoal: number;
+  userCaloriesConsumed: number;
 };
 
 
@@ -74,14 +78,28 @@ const AllRecipesList = ({ setSelectedPage, setSelectedID }: Props) => {
   const [tags, setTags] = useState<Tags[]>([]);
 
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [userProfile, setUserProfile] = useState<ProfileLogins[]>([]);
 
   
   //Recipe Delete och Update Ids UseState:
   const [recipeToUpdateId, setRecipeToUpdateId] = useState(null);
   const [recipeToDeleteId, setRecipeToDeleteId] = useState(null);
 
+  const [events, setEvents] = useState([]);
 
-
+//calendrar user fetch calories
+useEffect(() => {
+  // Fetch data from your API here
+  fetch('http://localhost:5239/api/DailyCaloricIntakeEntries')
+    .then(response => response.json())
+    .then(data => {
+      const formattedEvents = data.map((entry: { caloriesConsumed: any; date: any; }) => ({
+        title: `${entry.caloriesConsumed} calories`,
+        start: entry.date
+      }));
+      setEvents(formattedEvents);
+    });
+}, []);
 
 
 //Copy user page:
@@ -180,6 +198,25 @@ function fetchRecipes() {
       .then((response) => response.json())
       .then((data) => setRecipes(data));
 }
+
+
+  //Fetching UserProfiles
+useEffect(() => {
+  fetch("http://localhost:5239/api/UserLogins/1")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      setUserProfile(data)
+    })
+    .catch((error) => {
+      console.log("There was a problem with the fetch operation:", error.message);
+    });
+}, []);
 
 useEffect(() => {
   fetchRecipes();
@@ -311,7 +348,7 @@ const handleUpdateUser = async () => {
     UserLoginsName: 'Adam',
     UserLoginsPassword: 'SecuredPassword5',
     UserCaloriesGoal: userCaloriesGoal,
-    userCaloriesConsumed: null
+    userCaloriesConsumed: 0
   };
 
   try {
@@ -334,9 +371,15 @@ const handleUpdateUser = async () => {
 }
 
 
-
-
-
+// a custom render function
+function renderEventContent(eventInfo: { timeText: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; event: { title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }; }) {
+  return (
+    <>
+      <b>{eventInfo.timeText}</b>
+      <i>{eventInfo.event.title}</i>
+    </>
+  )
+}
 
 
 
@@ -357,7 +400,7 @@ const handleUpdateUser = async () => {
                 <div className="text-sm text-green-400 dark:text-gray-400">Level 10</div>
                 <progress value="70" max="100"> 70% </progress>
             </div>
-        </div>
+    </div>
         <FormControl sx={{ m: 1, minWidth: 140 }}>
         <InputLabel id="demo-simple-select-label">Category</InputLabel>
         <Select
@@ -388,6 +431,14 @@ const handleUpdateUser = async () => {
           </td>
         </form>
 
+
+        <FullCalendar
+        plugins={[dayGridPlugin]}
+        initialView='dayGridMonth'
+        weekends={false}
+        events={events}  
+        eventContent={renderEventContent}
+      />
 
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
