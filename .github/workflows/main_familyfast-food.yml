@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'FamilyFast-Food'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0F3F4C82F4B640EE81FE9F12C42C798E }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7AA250031435404597F19D16D639F06C }}
           package: .
