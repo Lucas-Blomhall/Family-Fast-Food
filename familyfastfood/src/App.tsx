@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { PublicClientApplication } from "@azure/msal-browser";
 import { MsalProvider } from "@azure/msal-react";
 import { useIsAuthenticated } from "@azure/msal-react";
-import Navbar from "@/scenes/navbar";
 import { SelectedPage } from "./shared/types";
 import Home from "./scenes/home";
 import Recipes from "./scenes/recipes";
@@ -22,6 +21,8 @@ import CreateIngredientPage from "./scenes/CreateIngredientPage";
 import UpdateRecipePage from "./scenes/UpdateRecipePage";
 import UserProfile from "./scenes/UserProfile";
 import UserLogin from "./scenes/UserLogin";
+import React from "react";
+import Navbar from "./scenes/navbar";
 
 // const pca = new PublicClientApplication({
 //   auth: {
@@ -36,10 +37,12 @@ import UserLogin from "./scenes/UserLogin";
 // });
 
 function App() {
-  const [selectedPage, setSelectedPage] = useState<SelectedPage>(SelectedPage.Home);
+  const [selectedPage, setSelectedPage] = useState<SelectedPage>(
+    SelectedPage.Home
+  );
   const [selectedID, setSelectedID] = useState<number | null>(null);
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
-  
+
   // useEffect(() => {
   //   const yourPromiseFunction = async () => {
   //     if (!pca) {
@@ -61,8 +64,7 @@ function App() {
       if (window.scrollY === 0) {
         setIsTopOfPage(true);
         setSelectedPage(SelectedPage.Home);
-      }
-      else if (window.scrollY !== 0) setIsTopOfPage(false);
+      } else if (window.scrollY !== 0) setIsTopOfPage(false);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -70,27 +72,69 @@ function App() {
 
   return (
     // <MsalProvider instance={pca}>
-      <div className="app bg-gray-20">
-        <Router>
-          <Navbar isTopOfPage={isTopOfPage} selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
-          <Home setSelectedPage={setSelectedPage} />
-          <Routes>
-            <Route path="/" element={<UserLogin setSelectedPage={setSelectedPage} setSelectedUserID={setSelectedID} />} />
-            <Route path="/recipes" element={<UserProfile setSelectedPage={setSelectedPage} setSelectedUserID={setSelectedID} />} />
-            <Route path="/user/:id" element={<AllRecipesList setSelectedPage={setSelectedPage} setSelectedID={setSelectedID} />} />
-            <Route path="/recipes/:id" element={<RecipeDetail setSelectedPage={setSelectedPage} selectedID={selectedID} />} />
-            <Route path="/api/Recipes/:recipeID" element={<ApiTestDetailRecipe />} />
-            <Route path="/api/ApiTestDetail/:id" element={<ApiTestDetailRecipe />} />
-          </Routes>
-          <CreateRecipePage setSelectedPage={setSelectedPage}/>
-          <CreateIngredientPage setSelectedPage={setSelectedPage}/>
-          <UpdateRecipePage setSelectedPage={setSelectedPage}/>
-          <Recipes setSelectedPage={setSelectedPage} />
-          <SelectedRecipe setSelectedPage={setSelectedPage} />
-          {/*<ContactMe setSelectedPage={setSelectedPage} /> */}
-          <Footer setSelectedPage={setSelectedPage}/>
-          </Router>
-      </div>
+    <div className="app bg-gray-20">
+      <Router>
+        <Navbar
+          isTopOfPage={isTopOfPage}
+          selectedPage={selectedPage}
+          setSelectedPage={setSelectedPage}
+        />
+        <Home setSelectedPage={setSelectedPage} />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <UserLogin
+                setSelectedPage={setSelectedPage}
+                setSelectedUserID={setSelectedID}
+              />
+            }
+          />
+          <Route
+            path="/recipes"
+            element={
+              <UserProfile
+                setSelectedPage={setSelectedPage}
+                setSelectedUserID={setSelectedID}
+              />
+            }
+          />
+          <Route
+            path="/user/:id"
+            element={
+              <AllRecipesList
+                setSelectedPage={setSelectedPage}
+                setSelectedID={setSelectedID}
+              />
+            }
+          />
+          <Route
+            path="/recipes/:id"
+            element={
+              <RecipeDetail
+                setSelectedPage={setSelectedPage}
+                selectedID={selectedID}
+              />
+            }
+          />
+          <Route
+            path="/api/Recipes/:recipeID"
+            element={<ApiTestDetailRecipe />}
+          />
+          <Route
+            path="/api/ApiTestDetail/:id"
+            element={<ApiTestDetailRecipe />}
+          />
+        </Routes>
+        <CreateRecipePage setSelectedPage={setSelectedPage} />
+        <CreateIngredientPage setSelectedPage={setSelectedPage} />
+        <UpdateRecipePage setSelectedPage={setSelectedPage} />
+        <Recipes setSelectedPage={setSelectedPage} />
+        <SelectedRecipe setSelectedPage={setSelectedPage} />
+        {/*<ContactMe setSelectedPage={setSelectedPage} /> */}
+        <Footer setSelectedPage={setSelectedPage} />
+      </Router>
+    </div>
     // </MsalProvider>
   );
 }
